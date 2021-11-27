@@ -1,10 +1,10 @@
-from Crypter.jsoncrypt import code, decode
+import jsoncrypt
 
 # TO ENCRYPT A JSON FILE - FOLLOW EXAMPLE
 filename = "./example.json"
 
 # TO ENCRYPT AND SAVE FILE
-if code(filename, save_file=True):
+if jsoncrypt.code(filename, save_file=True):
     with open(filename, "r") as file:
         encrypted_json = file.read()
         print(encrypted_json)
@@ -12,7 +12,7 @@ if code(filename, save_file=True):
 input("Press any key to see decrypted version")
 
 # TO DECRYPT AND SAVE FILE
-if decode(filename, save_file=True):
+if jsoncrypt.decode(filename, save_file=True):
     with open(filename, "r") as file:
         decrypted_json = file.read()
         print(decrypted_json)
@@ -20,9 +20,8 @@ if decode(filename, save_file=True):
 input("Press any key to see encryption as an object")
 
 # TO USE ENCRYPTION AND DECRYPTION ONLY AS AN OBJECT WITHOUT SAVING RESULTS IN A FILE
-encrypted_json = code(filename)
+encrypted_json = jsoncrypt.code(filename)
 print(encrypted_json)
-
 
 
 # OPTIONS TO ENCRYPT AND DECRYPT A JSON FILE
