@@ -1,3 +1,4 @@
+## EXAMPLE OF A JSON FILE TO BE ENCRYPTED OR DECRYPTED
 {
     "0": {
         "filename": "./data.json",
