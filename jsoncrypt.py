@@ -21,7 +21,8 @@ def code(file_to_encrypt, password="", sha256=True, save_file=False):
         return False
 
 
-def decode(file_to_decrypt, password="", sha256=True, ignore_verification=False, indent=4, save_file=False):
+def decode(file_to_decrypt, password="", sha256=True,
+           ignore_verification=False, indent=4, save_file=False, output="json"):
     try:
         encrypted_document = JsonCrypt.get_content(file_to_decrypt)
         original_document_hash = JsonCrypt.encrypt256(encrypted_document[0])
@@ -55,7 +56,10 @@ def decode(file_to_decrypt, password="", sha256=True, ignore_verification=False,
                         output_file.write(json_output)
                     return True
                 else:
-                    return json_output
+                    if output == "json":
+                        return json.loads(json_output)
+                    else:
+                        return json_output
             else:
                 return None
     except:
