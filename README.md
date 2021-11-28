@@ -1,10 +1,14 @@
 # JsonCrypt
 Encryption and Decryption of JSON files and Dictionaries
+
 Lock the file and encrypt with a password signature SHA-256
+
 The data will be randomicly encrypted with **24.883.200.000 different combinations.**
 So the same data with same password will always look diferent.
+
 The key to decrypt is divided in 5 parts, combined with a password and hashed with SHA-256.
 So the only way to decrypt data is using the password.
+
 Encrypt also dictionaries with a password, save as a file and decrypt as a dictionary or a string.
 
 # **pip install jsoncrypt**
