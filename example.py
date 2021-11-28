@@ -4,7 +4,7 @@ import jsoncrypt
 filename = "./example.json"
 
 # TO ENCRYPT AND SAVE FILE
-if jsoncrypt.code(filename, save_file=True):
+if Encrypt.jsonfile(filename, save_file=True):
     with open(filename, "r") as file:
         encrypted_json = file.read()
         print(encrypted_json)
@@ -12,7 +12,7 @@ if jsoncrypt.code(filename, save_file=True):
 input("Press any key to see decrypted version")
 
 # TO DECRYPT AND SAVE FILE
-if jsoncrypt.decode(filename, save_file=True):
+if Decrypt.jsonfile(filename, save_file=True):
     with open(filename, "r") as file:
         decrypted_json = file.read()
         print(decrypted_json)
@@ -20,7 +20,7 @@ if jsoncrypt.decode(filename, save_file=True):
 input("Press any key to see encryption as an object")
 
 # TO USE ENCRYPTION AND DECRYPTION ONLY AS AN OBJECT WITHOUT SAVING RESULTS IN A FILE
-encrypted_json = jsoncrypt.code(filename)
+encrypted_json = Encrypt.jsonstring(filename)
 print(encrypted_json)
 
 

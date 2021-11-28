@@ -220,3 +220,15 @@ def get_content(self):
         k5 = all_content[position+(5*64):position + 384]
         document = all_content[:position] + all_content[position+384:]
     return [document, k1, k2, k3, k4, k5, hash_document]
+
+
+def get_string(self):
+    position = int((len(self)-384) / 2)
+    hash_document = self[position:position+64]
+    k1 = self[position+(1*64):position + 128]
+    k2 = self[position+(2*64):position + 192]
+    k3 = self[position+(3*64):position + 256]
+    k4 = self[position+(4*64):position + 320]
+    k5 = self[position+(5*64):position + 384]
+    document = self[:position] + self[position+384:]
+    return [document, k1, k2, k3, k4, k5, hash_document]
