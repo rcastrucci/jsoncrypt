@@ -6,6 +6,15 @@ from .crypter import (encrypt256, encrypt, encode64,
                       get_content, get_sequence5, get_sequence6, get_string,
                       open_file)
 
+# TO USE JSONCRYPT IMPORT Encrypt AND Decrypt from jsoncrypt
+# FORMULAS TO USE ENCRYPT AND DECRYPT
+# Encrypt.jsonfile(json_filename_to_encrypt)
+# Encrypt.jsonstring(json_string_to_encrypt)
+# Encrypt.dictionary(a_dictionary_to_encrypt)
+# Decrypt.jsonfile(filename_encrypted)
+# Decrypt.jsonstring(json_string_encrypted)
+# Decrypt.dictionary(string_of_a_dictionary_encrypted)
+
 class Encrypt:
 
     def encryptjson(decrypted_string, password="", sha256=True):
