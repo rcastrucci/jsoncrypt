@@ -97,3 +97,4 @@ else:
 # password="str"       -> Add a password to the encryption (Using this option it will only decrypt with same password)
 # sha256="Boolean"     -> Is set True by default - this option will encrypt password with sha-256 signature
 # indent="int"         -> Set indent to Json file on decryption, by default is set to indent=4
+

@@ -15,6 +15,7 @@ from .crypter import (encrypt256, encrypt, encode64,
 # Decrypt.jsonstring(json_string_encrypted)
 # Decrypt.dictionary(string_of_a_dictionary_encrypted)
 
+
 class Encrypt:
 
     def encryptjson(decrypted_string, password="", sha256=True):

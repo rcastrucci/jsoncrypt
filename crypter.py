@@ -232,3 +232,4 @@ def get_string(self):
     k5 = self[position+(5*64):position + 384]
     document = self[:position] + self[position+384:]
     return [document, k1, k2, k3, k4, k5, hash_document]
+
