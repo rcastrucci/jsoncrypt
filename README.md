@@ -104,7 +104,7 @@ Finally use this formula to catch non encrypted files or no permission to save o
     else:
         print("String is not encrypted or not in a json format")
 
-# Is possible to encrypt a dictionary type
+# Encrypt a dictionary type
 **On encrypt it returns a string and on decrypt it returns back a sictionary**
 
     mydict = {"Name": "GRC Algoritmos"}
@@ -116,14 +116,14 @@ Finally use this formula to catch non encrypted files or no permission to save o
     print(encrypted_dict)
     print(type(encrypted_dict))
 
-# Decrypted as a dictionary
+# Decrypt as a dictionary
 
     print("Decrypted Dictionary:")
     decrypted_dict = Decrypt.dictionary(encrypted_dict)
     print(decrypted_dict)
     print(type(decrypted_dict))
 
-# Decrypted as a string
+# Decrypt as a string
 
     decrypted_string = Decrypt.jsonstring(encrypted_dict)
     print(decrypted_string)
