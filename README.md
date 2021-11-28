@@ -110,7 +110,7 @@ Finally use this formula to catch non encrypted files or no permission to save o
     mydict = {"Name": "GRC Algoritmos"}
     encrypted_dict = Encrypt.dictionary(mydict)
 
-**LET's SEE:**
+**LET'S SEE:**
 
     print("Encrypted Dictionary:")
     print(encrypted_dict)
@@ -141,12 +141,14 @@ If file exists as default it will return False, but it's possible to allow "Over
 
 # Options to use with Encrypt and Decrypt class
 
-**save_file="Boolean"**  -> Saves the result into the same file
+**save_file=True**       -> Saves the return on disk
 
-**save_file="Boolean"**  -> Returns a Json object with the result without saving on the file
+**save_file=False**      -> Returns a Json object without saving on disk
 
-**password="str"**       -> Add a password to the encryption (Using this option it will only decrypt with same password)
+**password="str/int"**       -> Add a password to the encryption (Using this option it will only decrypt with same password)
 
-**sha256="Boolean"**     -> Is set True by default - this option will encrypt password with sha-256 signature
+**sha256="Boolean"**     -> Is set True by default - this option will encrypt passwords with sha-256
 
 **indent="int"**         -> Set indent to Json file on decryption, by default is set to indent=4
+
+**output="string"**      -> Return decryption as a string, as default is set to "json" which returns as dictionary type
