@@ -1,28 +1,35 @@
 import jsoncrypt
 
 # TO ENCRYPT A JSON FILE - FOLLOW EXAMPLE
-filename = "./example.json"
+filename = "/Users/rennecastrucci/Github/PyPi JsonCrypt/jsoncrypt/example.json"
 
 # TO ENCRYPT AND SAVE FILE
-if Encrypt.jsonfile(filename, save_file=True):
+if jsoncrypt.Encrypt.jsonfile(filename, save_file=True):
     with open(filename, "r") as file:
         encrypted_json = file.read()
         print(encrypted_json)
 
-input("Press any key to see decrypted version")
+        print("encrypted_json type is -> {}".format(type(encrypted_json)))
+        input("Press any key to see decrypted version working with a string")
+
+        # TO USE DECRYPTION AS A STRING
+        decrypted_json = jsoncrypt.Decrypt.jsonstring(encrypted_json)
+        print(decrypted_json)
+else:
+    print("Something went wrong!")
+
+input("Press any key to decrypt file and save it")
 
 # TO DECRYPT AND SAVE FILE
-if Decrypt.jsonfile(filename, save_file=True):
+if jsoncrypt.Decrypt.jsonfile(filename, save_file=True):
     with open(filename, "r") as file:
         decrypted_json = file.read()
         print(decrypted_json)
 
-input("Press any key to see encryption as an object")
+input("Press any key to encrypt from a file into memory")
 
-# TO USE ENCRYPTION AND DECRYPTION ONLY AS AN OBJECT WITHOUT SAVING RESULTS IN A FILE
-encrypted_json = Encrypt.jsonstring(filename)
-print(encrypted_json)
-
+# TO ENCRYPT WITHOUT SAVING IN A FILE
+print(jsoncrypt.Encrypt.jsonfile(filename, save_file=False, output="json"))
 
 # OPTIONS TO ENCRYPT AND DECRYPT A JSON FILE
 # save_file="Boolean"  -> Saves the result into the same file

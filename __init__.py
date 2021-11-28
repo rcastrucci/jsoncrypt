@@ -5,25 +5,30 @@ import json
 
 class Encrypt:
 
-    def jsonfile(filename, password="", sha256=True, save_file=True, output="json"):
-        try:
-            if sha256:
-                password = crypter.encrypt256(password)
-            json_crypt_document = crypter.encrypt(crypter.open_file(filename), password)
-            if save_file:
-                # SAVE INTO FILE AND RETURN A BOOLEAN TRUE
-                with open(filename, "w", encoding="utf-8") as json_file_encrypted :
-                    json_file_encrypted.write(json_crypt_document)
-                return True
+    def encryptjson(decrypted_string, password="", sha256=True):
+        if sha256:
+            password = crypter.encrypt256(password)
+        # RETURN AS A STRING
+        return crypter.encrypt(decrypted_string, password)
+
+    def jsonfile(filename, password="", sha256=True, save_file=False, output="json"):
+        json_crypt_document = Encrypt.encryptjson(crypter.open_file(filename), password, sha256)
+        if save_file:
+            # SAVE INTO FILE AND RETURN A BOOLEAN TRUE
+            with open(filename, "w", encoding="utf-8") as json_file_encrypted :
+                json_file_encrypted.write(json_crypt_document)
+            return True
+        else:
+            if output == "json":
+                # RETURN AS A DICTIONARY
+                return json.loads(json_crypt_document)
             else:
-                if output == "json":
-                    # RETURN AS A DICTIONARY
-                    return json.loads(json_crypt_document)
-                else:
-                    # RETURN AS A STRING
-                    return json_crypt_document
-        except:
-            return False
+                # RETURN AS A STRING
+                return json_crypt_document
+
+    def jsonstring(string_to_encrypt, password="", sha256=True):
+        return Encrypt.encryptjson(string_to_encrypt, password, sha256)
+
 
 class Decrypt:
 
@@ -70,8 +75,6 @@ class Decrypt:
         encrypted_document = crypter.get_content(file_to_decrypt)
         decrypted_string = Decrypt.decryptjson(encrypted_document, password, sha256, ignore_verification, indent)
         if decrypted_string:
-            print("File decrypted successfully")
-            # IF OPTION SAVE_FILE BOOLEAN TRUE SAVE INTO FILE
             if save_file:
                 with open(file_to_decrypt, "w", encoding="utf-8") as output_file:
                     output_file.write(decrypted_string)
@@ -82,6 +85,8 @@ class Decrypt:
                 else:
                     return decrypted_string
         elif decrypted_string is None:
-            print("File is not encrypted or was modified")
+            # File is not encrypted or was modified
+            return None
         else:
-            print("Wrong password")
+            # Wrong password
+            return False
