@@ -1,7 +1,7 @@
 import jsoncrypt
 
 # TO ENCRYPT A JSON FILE - FOLLOW EXAMPLE
-filename = "/Users/rennecastrucci/Github/PyPi JsonCrypt/jsoncrypt/example.json"
+filename = "example.json"
 
 # TO ENCRYPT AND SAVE FILE
 if jsoncrypt.Encrypt.jsonfile(filename, save_file=True):
