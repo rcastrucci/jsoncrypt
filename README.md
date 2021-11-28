@@ -3,10 +3,10 @@ Encryption and Decryption of JSON files and Dictionaries.
 Option to add a password to an encrypted file and reading afterwards in memory.
 Option to encrypt and save a dictionary with a password in a file and decrypt as a dictionary or a string.
 
-# USAGE EXAMPLE
+**USAGE EXAMPLE**
 from jsoncrypt import Encrypt, Decrypt
 
-# FORMULAS TO ENCRYPT AND DECRYPT
+# FORMULA TO ENCRYPT AND DECRYPT
 Encrypt.jsonfile(json_filename_to_encrypt)
 Encrypt.jsonstring(json_string_to_encrypt)
 Encrypt.dictionary(a_dictionary_to_encrypt)
@@ -16,15 +16,15 @@ Decrypt.dictionary(string_of_a_dictionary_encrypted)
 
 FOLLOWING SOME EXAMPLES:
 
-# SELECT A JSON FILE
+**SELECT A JSON FILE**
 filename = "./example.json"
 
-# TO ENCRYPT FROM A FILE AND JUST GET AS A STRING WITHOUT SAVING IT
+# TO ENCRYPT A JSON FILE AND RETURN A STRING 
 Encrypt.jsonfile(filename)
 
-**IT WILL RETURN A STRING IF WAS A JSON FILE AND SUCCESS TO ENCRYPT OR
-IT WILL RETURN A NONE IF WASN'T A JSON FILE AND FAILED TO ENCRYPT
-FINALLY TO CATCH NOT JSON FILES USE**
+**IT WILL RETURN A STRING IF WAS A JSON FILE AND SUCCESSFULLY ENCRYPTED OR
+IT WILL RETURN NONE IF WASN'T A JSON FILE AND FAILED TO ENCRYPT
+FINALLY TO CATCH NON JSON FILES USE:**
 
 string_encrypted = Encrypt.jsonfile(filename)
 if string_encrypted:
@@ -33,25 +33,27 @@ if string_encrypted:
 else:
     print("Not possible to encrypt non json files")
 
-# TO ENCRYPT FROM A FILE AND SAVE FILE USE
+# TO ENCRYPT FROM A FILE AND SAVE FILE ENCRYPTED
 Encrypt.jsonfile(filename, save_file=True)
 
-**IT WILL RETURN BOOLEAN TRUE IF WAS SUCCESS OR BOOLEAN FALSE IF FAILED TO SAVE
+**IT WILL RETURN BOOLEAN TRUE IF WAS SUCCESSFULLY ENCRYPTED OR BOOLEAN FALSE IF FAILED TO SAVE
 FINALLY USE FORMULA TO CATCH NON JSON FILES OR NO PERMISSIONS TO SAVE ON DISK**
 if Encrypt.jsonfile(filename, save_file=True):
     print("File {} was successfully encrypted and has been saved!".format(filename))
 else:
     print("Failed to encrypt file")
 
-# DECRYPT INTO MEMORY TO USE DATA AS NECESSARY (HERE FILE USED MUST BE ENCRYPTED TO BE ABLE TO DECRYPT RIGHT!?)
-**IF FILE IS NOT ENCRYPTED IT WILL RETURN A BOOLEAN FALSE
-TO DECRYPT AND GET AS DICTIONARY USE**
+# DECRYPT INTO MEMORY TO USE AS DATA IF NECESSARY
+**HERE FILE USED MUST BE ENCRYPTED TO BE ABLE TO DECRYPT
+IF FILE IS NOT ENCRYPTED IT WILL RETURN A BOOLEAN FALSE**
+
+**TO DECRYPT AND GET AS DICTIONARY**
 dictionary = Decrypt.jsonfile(filename)
 
-# TO DECRYPT AND GET AS STRING USE
+**TO DECRYPT AND GET AS STRING**
 string_decrypted = Decrypt.jsonfile(filename, output="string")
 
-# TO DECRYPT AND GET AS STRING AND CHANGE INDENT USE (DEFAULT INDENT IS 4)
+**TO DECRYPT, GET AS STRING AND CHANGE INDENT (DEFAULT INDENT IS 4)**
 string_indented = Decrypt.jsonfile(filename, output="string", indent=2)
 
 # TO DECRYPT FROM A FILE AND SAVE IT
@@ -62,13 +64,13 @@ if Decrypt.jsonfile(filename, save_file=True):
 else:
     print("File is not encrypted or it was modified")
 
-# IT IS POSSIBLE ALSO TO ENCRYPT AND DECRYPT FROM A STRING
-**IMPORTANT! STRING MUST BE ON A JSON TYPE FORMAT**
+# IT IS POSSIBLE ALSO TO ENCRYPT AND DECRYPT FROM A STRING OR A DICTIONARY
+**IMPORTANT! STRINGS MUST BE ON A DICTIONARY FORMAT**
 my_json_string_encrypted = Encrypt.jsonfile(filename)
 print("ENCRYPTED FROM A FILE INTO A STRING")
 print(my_json_string_encrypted)
 
-# TO DECRYPT A STRING ON FORMAT OF JSON USE
+**TO DECRYPT A STRING THAT WAS ENCRYPTED WITH A DICTIONARY FORMAT**
 decrypted_jsonstring = Decrypt.jsonstring(my_json_string_encrypted)
 if decrypted_jsonstring:
     print("DECRYPTED FROM A STRING INTO ANOTHER STRING")
@@ -76,8 +78,8 @@ if decrypted_jsonstring:
 else:
     print("String is not encrypted or not in a json format")
 
-# IS POSSIBLE TO ENCRYPT ALSO A DICTONARY TYPE
-**ON ENCRYPT IT RETURN A STRING AND ON DECRYPT IT RETURN A DICTIONARY**
+# IS POSSIBLE TO ENCRYPT A DICTONARY TYPE
+**ON ENCRYPT IT RETURN A STRING AND ON DECRYPT IT RETURNS BACK A DICTIONARY**
 mydict = {"Name": "GRC Algoritmos"}
 encrypted_dict = Encrypt.dictionary(mydict)
 
@@ -85,9 +87,9 @@ encrypted_dict = Encrypt.dictionary(mydict)
 print("Encrypted Dictionary:")
 print(encrypted_dict)
 print(type(encrypted_dict))
-print("Decrypted Dictionary:")
 
 # DECRYPTED AS A DICTIONARY
+print("Decrypted Dictionary:")
 decrypted_dict = Decrypt.dictionary(encrypted_dict)
 print(decrypted_dict)
 print(type(decrypted_dict))
@@ -97,15 +99,14 @@ decrypted_string = Decrypt.jsonstring(encrypted_dict)
 print(decrypted_string)
 print(type(decrypted_string))
 
-# IS POSSIBLE TO ENCRYPT A DICTONARY AND SAVE IN A FILE
+# IS POSSIBLE TO ENCRYPT A DICTONARY AND SAVE AS A FILE
 **IT WILL RETURN A BOOLEAN TRUE IF WAS SUCCESSFULL SAVED OR BOOLEAN FALSE IF FAILED
-IF FILE EXISTS AS DEFAULT IT WILL RETURN FALSE BUT IS POSSIBLE TO ALLOW OVERWRITE JUST SET overwrite=True**
+IF FILE EXISTS AS DEFAULT IT WILL RETURN FALSE BUT IS POSSIBLE TO ALLOW "OVERWRITE" JUST SET overwrite=True**
 mydict = {"Name": "GRC Algoritmos", "File": "Saved"}
 if Encrypt.dictionary(mydict, save_file=True, filename="grc.json", overwrite=True):
     print("Successfully saved!")
 else:
     print("Not possible to save")
-
 
 # OPTIONS TO ENCRYPT AND DECRYPT A JSON FILE
 **save_file="Boolean"**  -> Saves the result into the same file
@@ -113,4 +114,3 @@ else:
 **password="str"**       -> Add a password to the encryption (Using this option it will only decrypt with same password)
 **sha256="Boolean"**     -> Is set True by default - this option will encrypt password with sha-256 signature
 **indent="int"**         -> Set indent to Json file on decryption, by default is set to indent=4
-
