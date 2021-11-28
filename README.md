@@ -1,14 +1,18 @@
 # JsonCrypt
-Encryption and Decryption of JSON files and Dictionaries.
-Option to add a password to an encrypted file and reading afterwards in memory.
-Option to encrypt and save a dictionary with a password in a file and decrypt as a dictionary or a string.
+Encryption and Decryption of JSON files and Dictionaries
+Lock the file and encrypt with a password signature SHA-256
+The data will be randomicly encrypted with **24.883.200.000 different combinations.**
+So the same data with same password will always look diferent.
+The key to decrypt is divided in 5 parts, combined with a password and hashed with SHA-256.
+So the only way to decrypt data is using the password.
+Encrypt also dictionaries with a password, save as a file and decrypt as a dictionary or a string.
 
 # **pip install jsoncrypt**
 
-**USAGE EXAMPLE**
+**HOW TO USE**
 from jsoncrypt import Encrypt, Decrypt
 
-# FORMULA TO ENCRYPT AND DECRYPT
+# Formula to encrypt and decrypt
 Encrypt.jsonfile(json_filename_to_encrypt)
 Encrypt.jsonstring(json_string_to_encrypt)
 Encrypt.dictionary(a_dictionary_to_encrypt)
@@ -16,12 +20,12 @@ Decrypt.jsonfile(filename_encrypted)
 Decrypt.jsonstring(json_string_encrypted)
 Decrypt.dictionary(string_of_a_dictionary_encrypted)
 
-FOLLOWING SOME EXAMPLES:
+**Following some code samples**
 
-**SELECT A JSON FILE**
+**Select a Json File**
 filename = "./example.json"
 
-# TO ENCRYPT A JSON FILE AND RETURN A STRING 
+# To encrypt a Json file and return a string 
 Encrypt.jsonfile(filename)
 
 **IT WILL RETURN A STRING IF WAS A JSON FILE AND SUCCESSFULLY ENCRYPTED OR
@@ -35,7 +39,7 @@ if string_encrypted:
 else:
     print("Not possible to encrypt non json files")
 
-# TO ENCRYPT FROM A FILE AND SAVE FILE ENCRYPTED
+# To encrypt from a file and save file encrypted
 Encrypt.jsonfile(filename, save_file=True)
 
 **IT WILL RETURN BOOLEAN TRUE IF WAS SUCCESSFULLY ENCRYPTED OR BOOLEAN FALSE IF FAILED TO SAVE
@@ -49,13 +53,13 @@ else:
 **HERE FILE USED MUST BE ENCRYPTED TO BE ABLE TO DECRYPT
 IF FILE IS NOT ENCRYPTED IT WILL RETURN A BOOLEAN FALSE**
 
-**TO DECRYPT AND GET AS DICTIONARY**
+**To decrypt and get as dictionary**
 dictionary = Decrypt.jsonfile(filename)
 
-**TO DECRYPT AND GET AS STRING**
+**To decrypt and get as string**
 string_decrypted = Decrypt.jsonfile(filename, output="string")
 
-**TO DECRYPT, GET AS STRING AND CHANGE INDENT (DEFAULT INDENT IS 4)**
+**To decrypt, get as. string and change indent (Default indente is 4)**
 string_indented = Decrypt.jsonfile(filename, output="string", indent=2)
 
 # TO DECRYPT FROM A FILE AND SAVE IT
