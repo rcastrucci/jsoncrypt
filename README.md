@@ -74,7 +74,7 @@ Finally use this formula to catch non Json files or no permissionn to save on di
 
     string_decrypted = Decrypt.jsonfile(filename, output="string")
 
-**To decrypt, get as. string and change indent (Default indente is 4)**
+**To decrypt, get as string and change indent (Default indent is 4)**
 
     string_indented = Decrypt.jsonfile(filename, output="string", indent=2)
 
