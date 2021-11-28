@@ -3,6 +3,8 @@ Encryption and Decryption of JSON files and Dictionaries.
 Option to add a password to an encrypted file and reading afterwards in memory.
 Option to encrypt and save a dictionary with a password in a file and decrypt as a dictionary or a string.
 
+# **pip install jsoncrypt**
+
 **USAGE EXAMPLE**
 from jsoncrypt import Encrypt, Decrypt
 
@@ -110,7 +112,11 @@ else:
 
 # OPTIONS TO ENCRYPT AND DECRYPT A JSON FILE
 **save_file="Boolean"**  -> Saves the result into the same file
+
 **save_file="Boolean"**  -> Returns a Json object with the result without saving on the file
+
 **password="str"**       -> Add a password to the encryption (Using this option it will only decrypt with same password)
+
 **sha256="Boolean"**     -> Is set True by default - this option will encrypt password with sha-256 signature
+
 **indent="int"**         -> Set indent to Json file on decryption, by default is set to indent=4
