@@ -1,49 +1,79 @@
-import crypter
 import ast
 import json
-
+from os.path import exists
+from .crypter import (encrypt256, encrypt, encode64,
+                      decrypt, decode64,
+                      get_content, get_sequence5, get_sequence6, get_string,
+                      open_file)
 
 class Encrypt:
 
     def encryptjson(decrypted_string, password="", sha256=True):
         if sha256:
-            password = crypter.encrypt256(password)
+            password = encrypt256(password)
         # RETURN AS A STRING
-        return crypter.encrypt(decrypted_string, password)
+        return encrypt(decrypted_string, password)
 
-    def jsonfile(filename, password="", sha256=True, save_file=False, output="json"):
-        json_crypt_document = Encrypt.encryptjson(crypter.open_file(filename), password, sha256)
+    def jsonfile(filename, password="", sha256=True, save_file=False):
+        try:
+            json_crypt_document = Encrypt.encryptjson(open_file(filename), password=password, sha256=sha256)
+        except:
+            return None
         if save_file:
             # SAVE INTO FILE AND RETURN A BOOLEAN TRUE
-            with open(filename, "w", encoding="utf-8") as json_file_encrypted :
-                json_file_encrypted.write(json_crypt_document)
-            return True
+            try:
+                with open(filename, "w", encoding="utf-8") as json_file_encrypted :
+                    json_file_encrypted.write(json_crypt_document)
+                return True
+            except:
+                return False
         else:
-            if output == "json":
-                # RETURN AS A DICTIONARY
-                return json.loads(json_crypt_document)
-            else:
-                # RETURN AS A STRING
-                return json_crypt_document
+            # RETURN AS A STRING
+            return json_crypt_document
 
-    def jsonstring(string_to_encrypt, password="", sha256=True):
-        return Encrypt.encryptjson(string_to_encrypt, password, sha256)
+    def jsonstring(string_to_encrypt, password="", sha256=True, save_file=False, filename=None, overwrite=False):
+        if save_file and filename is not None:
+            if not exists(filename) or exists(filename) and overwrite:
+                try:
+                    with open(filename, "w", encoding="utf-8") as string_encrypted:
+                        string_encrypted.write(Encrypt.encryptjson(string_to_encrypt, password=password, sha256=sha256))
+                    return True
+                except:
+                    return False
+            else:
+                return False
+        else:
+            return Encrypt.encryptjson(string_to_encrypt, password=password, sha256=sha256)
+
+    def dictionary(dictionary_to_encrypt, password="", sha256=True, save_file=False, filename=None, overwrite=False):
+        if save_file and filename is not None:
+            if not exists(filename) or exists(filename) and overwrite:
+                try:
+                    with open(filename, "w", encoding="utf-8") as dictionary_encrypted:
+                        dictionary_encrypted.write(Encrypt.encryptjson(str(dictionary_to_encrypt), password=password, sha256=sha256))
+                    return True
+                except:
+                    return False
+            else:
+                return False
+        else:
+            return Encrypt.encryptjson(str(dictionary_to_encrypt), password=password, sha256=sha256)
 
 
 class Decrypt:
 
     def decryptjson(encrypted_document, password="", sha256=True, ignore_verification=False, indent=4):
         try:
-            original_document_hash = crypter.encrypt256(encrypted_document[0])
+            original_document_hash = encrypt256(encrypted_document[0])
             if sha256:
-                password = crypter.encrypt256(password)
+                password = encrypt256(password)
             # CHECK IF FILE IS ENCRYPTED OR IF WAS MODIFIED
             if encrypted_document[6] == original_document_hash or ignore_verification:
-                crypt_key1 = crypter.get_sequence5(0, 5, password, encrypted_document[1])
-                crypt_key2 = crypter.get_sequence5(5, 10, password, encrypted_document[2])
-                crypt_key3 = crypter.get_sequence5(10, 15, password, encrypted_document[3])
-                crypt_key4 = crypter.get_sequence5(15, 20, password, encrypted_document[4])
-                crypt_key5 = crypter.get_sequence6(20, 26, password, encrypted_document[5])
+                crypt_key1 = get_sequence5(0, 5, password, encrypted_document[1])
+                crypt_key2 = get_sequence5(5, 10, password, encrypted_document[2])
+                crypt_key3 = get_sequence5(10, 15, password, encrypted_document[3])
+                crypt_key4 = get_sequence5(15, 20, password, encrypted_document[4])
+                crypt_key5 = get_sequence6(20, 26, password, encrypted_document[5])
                 if crypt_key1 is not None and crypt_key2 is not None and \
                 crypt_key3 is not None and crypt_key4 is not None and \
                 crypt_key5 is not None:
@@ -58,8 +88,8 @@ class Decrypt:
                         crypt_content.append(key_sequence)
                     for key_sequence in crypt_key5:
                         crypt_content.append(key_sequence)
-                    decrypt = crypter.decrypt(encrypted_document[0], crypt_content)
-                    return json.dumps(ast.literal_eval(decrypt), indent=indent, ensure_ascii=False)
+                    decrypted_string = decrypt(encrypted_document[0], crypt_content)
+                    return json.dumps(ast.literal_eval(decrypted_string), indent=indent, ensure_ascii=False)
                 else:
                     return None
             else:
@@ -68,12 +98,19 @@ class Decrypt:
             return False
 
     def jsonstring(string_to_decrypt, password="", sha256=True, ignore_verification=False, indent=4):
-        encrypted_document = crypter.get_string(string_to_decrypt)
-        return Decrypt.decryptjson(encrypted_document, password, sha256, ignore_verification, indent)
+        encrypted_document = get_string(string_to_decrypt)
+        return Decrypt.decryptjson(encrypted_document, password=password, sha256=sha256,
+                                   ignore_verification=ignore_verification, indent=indent)
+
+    def dictionary(dictionary_to_decrypt, password="", sha256=True, ignore_verification=False, indent=4):
+        encrypted_document = get_string(dictionary_to_decrypt)
+        return json.loads(Decrypt.decryptjson(encrypted_document, password=password, sha256=sha256,
+                                   ignore_verification=ignore_verification, indent=indent))
 
     def jsonfile(file_to_decrypt, password="", sha256=True, ignore_verification=False, indent=4, save_file=False, output="json"):
-        encrypted_document = crypter.get_content(file_to_decrypt)
-        decrypted_string = Decrypt.decryptjson(encrypted_document, password, sha256, ignore_verification, indent)
+        encrypted_document = get_content(file_to_decrypt)
+        decrypted_string = Decrypt.decryptjson(encrypted_document, password=password, sha256=sha256,
+                                               ignore_verification=ignore_verification, indent=indent)
         if decrypted_string:
             if save_file:
                 with open(file_to_decrypt, "w", encoding="utf-8") as output_file:
