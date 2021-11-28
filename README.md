@@ -1,4 +1,4 @@
-# jsoncrypt
+# JsonCrypt
 Encryption and Decryption of JSON files and Dictionaries.
 Option to add a password to an encrypted file and reading afterwards in memory.
 Option to encrypt and save a dictionary with a password in a file and decrypt as a dictionary or a string.
