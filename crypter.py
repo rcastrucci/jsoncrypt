@@ -208,21 +208,7 @@ def open_file(self):
     return str(json_content)
 
 
-def get_content(self):
-    with open(self, "r", encoding="utf-8") as file:
-        all_content = file.read()
-        position = int((len(all_content)-384) / 2)
-        hash_document = all_content[position:position+64]
-        k1 = all_content[position+(1*64):position + 128]
-        k2 = all_content[position+(2*64):position + 192]
-        k3 = all_content[position+(3*64):position + 256]
-        k4 = all_content[position+(4*64):position + 320]
-        k5 = all_content[position+(5*64):position + 384]
-        document = all_content[:position] + all_content[position+384:]
-    return [document, k1, k2, k3, k4, k5, hash_document]
-
-
-def get_string(self):
+def get_keys(self):
     position = int((len(self)-384) / 2)
     hash_document = self[position:position+64]
     k1 = self[position+(1*64):position + 128]
@@ -232,4 +218,14 @@ def get_string(self):
     k5 = self[position+(5*64):position + 384]
     document = self[:position] + self[position+384:]
     return [document, k1, k2, k3, k4, k5, hash_document]
+
+
+def get_content(self):
+    with open(self, "r", encoding="utf-8") as file:
+        all_content = file.read()
+    return get_keys(all_content)
+
+
+def get_string(self):
+    return get_keys(all_content)
 
