@@ -227,5 +227,5 @@ def get_content(self):
 
 
 def get_string(self):
-    return get_keys(all_content)
+    return get_keys(self)
 
